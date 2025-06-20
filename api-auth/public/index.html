@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Key Tester</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full space-y-6">
+    <h1 class="text-2xl font-bold text-center text-blue-700">🔐 API Key Tester</h1>
+
+    <div>
+      <label for="apiKeyInput" class="block text-sm font-medium text-gray-700 mb-1">Enter API Key</label>
+      <input
+        type="text"
+        id="apiKeyInput"
+        placeholder="e.g. abc123456"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+      />
+    </div>
+
+    <button
+      onclick="callApi()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition duration-300"
+    >
+      Test API Access
+    </button>
+
+    <pre
+      id="responseOutput"
+      class="text-sm bg-gray-100 p-4 rounded-lg max-h-60 overflow-y-auto text-gray-800"
+    >Response will appear here...</pre>
+  </div>
+
+  <script>
+    async function callApi() {
+      const apiKey = document.getElementById("apiKeyInput").value.trim();
+      const output = document.getElementById("responseOutput");
+
+      if (!apiKey) {
+        output.textContent = "❗ Please enter an API key.";
+        return;
+      }
+
+      output.textContent = "⏳ Sending request...";
+
+      try {
+        const res = await fetch("https://your-api.onrender.com/protected", {
+          headers: {
+            "x-api-key": apiKey,
+          },
+        });
+
+        const data = await res.json();
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.textContent = "❌ Something went wrong: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>

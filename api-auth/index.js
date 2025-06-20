@@ -7,10 +7,12 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.static("public"));
+
 app.use("/protected", apiKeyAuth, protectedRoute);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the API KEY AUTH, Use /protected with the API Key.");
+  res.send("Visit / to test the API Key UI.");
 });
 
 const PORT = process.env.PORT || 3000;
