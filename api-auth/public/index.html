@@ -53,7 +53,7 @@
         });
 
         const data = await res.json();
-        output.textContent = JSON.stringify(data, null, 2);
+        output.textContent = `✅ ${data.message}`
       } catch (err) {
         output.textContent = "❌ Something went wrong: " + err.message;
       }
